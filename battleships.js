@@ -1,123 +1,13 @@
-const Direction = {
-    HORIZONTAL: 0,
-    VERTICAL: 1
-}
 const e = React.createElement;
-
-
-function ProximityDetector(){
-    let proximity = [new Array(100),new Array(100)];
-    for(let i = 0; i < 10; i++) {
-        for(let j = 0; j < 10; j++) {
-            proximity[Direction.HORIZONTAL][i*10+j] = j+1;
-            proximity[Direction.VERTICAL][i*10+j] = i+1;
-        }
-    }
-    function updateObstacles(playField) { 
-        for(let i = 0; i < 100; i++) {
-            if (playField[i]) {
-                proximity[Direction.HORIZONTAL][i] = 0;
-                proximity[Direction.VERTICAL][i] = 0;
-            }
-        }
-    }
-    
-    function updateProximity() {
-        let max = [10,10];
-        let current = 1;
-        for(let i = 0; i < 10; i++) {
-            for(let j = 0; j < 10; j++) {
-                if(current > proximity[Direction.HORIZONTAL][i*10+j]) {
-                    current = 1;
-                 } else {
-                    proximity[Direction.HORIZONTAL][i*10+j] = current;
-                    if(current>max[Direction.HORIZONTAL]) max[Direction.HORIZONTAL] = current;
-                    current++;
-                }
-
-            }
-            current = 1;
-        }
-        for(let i = 0; i < 10; i++) {
-            for(let j = 0; j < 10; j++) {
-                if(current > proximity[Direction.VERTICAL][j*10+i]){
-                    current = 1;
-                } else {
-                    proximity[Direction.VERTICAL][j*10+i] = current;
-                    if(current>max[Direction.VERTICAL]) max[Direction.VERTICAL] = current;
-                    current++;
-                }
-            }
-            current = 1;
-        }     
-        return max;
-    }
-
-    this.update = function(playField) {
-        updateObstacles(playField);
-        return updateProximity();
-    }
-
-    this.getCandidates = function(size,orientation) { 
-        let candidates = [];
-        for(let i = 0; i < 100; i++) {
-            if(proximity[orientation][i] >= size){
-                candidates.push(i);
-            }
-        }
-        return candidates;
-    }
-}
-
-function ShipPlacer(){
-    let playField = new Array(100).fill(0);
-    let proximityDetector = new ProximityDetector();
-    let max = proximityDetector.update(playField);
-    let lives = 0;
-    this.placeShip = function(size) {
-        if(max[Direction.HORIZONTAL]>=size && max[Direction.VERTICAL]>=size) {
-            placeShipWithOrientation(size,Math.floor(Math.random()*2))
-        } else if (max[Direction.HORIZONTAL]>=size) {
-            placeShipWithOrientation(size,Direction.HORIZONTAL);
-        } else if (max[Direction.VERTICAL]>=size) {
-            placeShipWithOrientation(size,Direction.VERTICAL);
-        } else {
-            console.log("Unable to place ship of size " +size+".");
-            return;
-        }
-        lives += size;
-    }
-    function placeShipWithOrientation(size,orientation) {
-        let placePos = proximityDetector.getCandidates(size,orientation);
-        placePos = placePos[Math.floor(Math.random()*placePos.length)];
-        let factor = orientation==Direction.HORIZONTAL?1:10;
-        for(let i = 0; i < size; i++){
-            playField[placePos-i*factor] = size;
-        }
-        proximityDetector.update(playField);
-    }
-    this.getInitialGameState = function() {
-        return new GameState(playField,lives);
-    }
-}
-
-class GameState {
-    constructor(_playField,_lives) {
-        this.playField = _playField;
-        this.livesRemaining = _lives;
-        this.hitField = new Array(100).fill(false);
-        this.lastEvent = "Battleships";
-    }
-}
 
 class Game extends React.Component {
     constructor(props) {
         super(props)
-        let shipPlacer = new ShipPlacer();        
-        shipPlacer.placeShip(5);
-        shipPlacer.placeShip(4);
-        shipPlacer.placeShip(4);
-        this.state = shipPlacer.getInitialGameState();
+        let gameStateFactory = new GameStateFactory();        
+        gameStateFactory.placeShip(5);
+        gameStateFactory.placeShip(4);
+        gameStateFactory.placeShip(4);
+        this.state = gameStateFactory.getInitialGameState();
     }
     hitTile(i) {
         if(this.state.livesRemaining) {
