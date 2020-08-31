@@ -1,12 +1,14 @@
+
 const e = React.createElement;
 
 class Game extends React.Component {
     constructor(props) {
         super(props)
-        let gameStateFactory = new GameStateFactory();        
-        gameStateFactory.placeShip(5);
-        gameStateFactory.placeShip(4);
-        gameStateFactory.placeShip(4);
+        let gameStateFactory = new GameStateFactory(10,10);        
+        gameStateFactory.tryPlaceShipRandomly(5);
+        gameStateFactory.tryPlaceShipRandomly(4);
+        gameStateFactory.tryPlaceShipRandomly(4);
+        console.log(gameStateFactory.getInitialGameState().playField)
         this.state = gameStateFactory.getInitialGameState();
     }
     hitTile(i) {
