@@ -37,10 +37,18 @@ elements in vector greater than size should have their index be part of candidat
 
 const ClearanceDetector = {
     isPositionClear : function(vector, size, pos) {
+        if(!Array.isArray(vector)) throw new TypeError();
+        if(typeof(vector[pos]) != 'number') throw new TypeError();
+        if(typeof(size) != 'number') throw new TypeError();
         if(vector[pos] >= size) return true;
         else return false;
     },
     getCandidates : function(vector, size) {
+        if(!Array.isArray(vector)) throw new TypeError();
+        if(typeof(size) != 'number') throw new TypeError();
+        if(!vector.every((value)=>{ 
+            return (typeof(value)=='number');
+        })) throw new TypeError();
         let candidates = [];
         for(let pos = 0; pos < vector.length; pos++) {
             if(vector[pos] >= size) candidates.push(pos);

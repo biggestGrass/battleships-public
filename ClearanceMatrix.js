@@ -120,7 +120,7 @@ function ClearanceMatrix(columns, rows, orientation){
 
 function isValidArrayIndex(index,arrayLength) {
     if(Number.isSafeInteger(index)) {
-        if(index >= 0 && index <= arrayLength) return true;
+        if(index >= 0 && index < arrayLength) return true;
     }
     return false;
 }

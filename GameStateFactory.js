@@ -6,16 +6,6 @@ livesRemaining must be equal to the number of non-zero values in playField
 unless an element's value is either 1 or 0, the element must be adjacent to another element with the same value
 */
 
-
-Test.checkPlayFieldIntegerCountEqualsLiveRemaining = function(playField, livesRemaining) {
-    let playFieldNonZeroCount = 0;
-    for(let i = 0; i < playField.length; i++) {
-        if(playField[i] > 0) playFieldNonZeroCount++;
-    }
-    if(playFieldNonZeroCount == livesRemaining) return true;
-    else return false;
-}
-
 class GameState {
     constructor(_playField,_lives) {
         this.playField = _playField;
@@ -101,7 +91,6 @@ function GameStateFactory(columns, rows){
             throw new Error();
         }
         livesRemaining += size;
-        console.log(livesRemaining)
     }
     this.getInitialGameState = function() {
         let finalPlayField = [];
@@ -111,5 +100,3 @@ function GameStateFactory(columns, rows){
         return new GameState(finalPlayField,livesRemaining);
     }
 }
-
-new GameStateFactory(10,10).getInitialGameState()

@@ -8,7 +8,6 @@ class Game extends React.Component {
         gameStateFactory.tryPlaceShipRandomly(5);
         gameStateFactory.tryPlaceShipRandomly(4);
         gameStateFactory.tryPlaceShipRandomly(4);
-        console.log(gameStateFactory.getInitialGameState().playField)
         this.state = gameStateFactory.getInitialGameState();
     }
     hitTile(i) {
