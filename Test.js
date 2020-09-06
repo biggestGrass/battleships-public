@@ -261,36 +261,36 @@ function Test() {
     }
     
     function ClearanceMatrix_addObstacle_column_notNumber_returnsUndefined(testObject) {
-        if(testObject.addObstacle("hello",1) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate("hello",1)) === undefined) return true;
         else return false;
     }
     function ClearanceMatrix_addObstacle_column_notInteger_returnsUndefined(testObject) {
-        if(testObject.addObstacle(0.5,1) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(0.5,1)) === undefined) return true;
         else return false;
     }
     function ClearanceMatrix_addObstacle_column_negative_returnsUndefined(testObject) {
-        if(testObject.addObstacle(-1,1) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(-1,1)) === undefined) return true;
         else return false;
     }
     function ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined(testObject) {
-        if(testObject.addObstacle(2,1) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(2,1)) === undefined) return true;
         else return false;
     }
 
     function ClearanceMatrix_addObstacle_row_notNumber_returnsUndefined(testObject) {
-        if(testObject.addObstacle(1,"hello") === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(1,"hello")) === undefined) return true;
         else return false;
     }
     function ClearanceMatrix_addObstacle_row_notInteger_returnsUndefined(testObject) {
-        if(testObject.addObstacle(1,0.5) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(1,0.5)) === undefined) return true;
         else return false;
     }
     function ClearanceMatrix_addObstacle_row_negative_returnsUndefined(testObject) {
-        if(testObject.addObstacle(1,-1) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(1,-1)) === undefined) return true;
         else return false;
     }
     function ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined(testObject) {
-        if(testObject.addObstacle(1,2) === undefined) return true;
+        if(testObject.addObstacle(new Coordinate(1,2)) === undefined) return true;
         else return false;
     }
 

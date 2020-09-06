@@ -5,9 +5,9 @@ class Game extends React.Component {
     constructor(props) {
         super(props)
         let gameStateFactory = new GameStateFactory(10,10);        
-        gameStateFactory.tryPlaceShipRandomly(5);
-        gameStateFactory.tryPlaceShipRandomly(4);
-        gameStateFactory.tryPlaceShipRandomly(4);
+        console.log(gameStateFactory.tryPlaceShipRandomly(5));
+        console.log(gameStateFactory.tryPlaceShipRandomly(4));
+        console.log(gameStateFactory.tryPlaceShipRandomly(4));
         this.state = gameStateFactory.getInitialGameState();
     }
     hitTile(i) {

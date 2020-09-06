@@ -58,16 +58,16 @@ function ClearanceMatrix(columns, rows, orientation){
         for(let i = 0; i < rows; i++) {
             clearanceVectors[i] = new Array(columns);
         }
-        this.addObstacle = function(column, row) {
-            return addObstacle(column, row);
+        this.addObstacle = function(coordinate) {
+            return addObstacle(coordinate.row, coordinate.column);
         }
     } else if(orientation == Direction.VERTICAL) {
         clearanceVectors = new Array(columns);
         for(let i = 0; i < columns; i++) {
             clearanceVectors[i] = new Array(rows);
         }
-        this.addObstacle = function(column, row) {
-            return addObstacle(row, column);
+        this.addObstacle = function(coordinate) {
+            return addObstacle(coordinate.column, coordinate.row);
         }
     } else {
         if(typeof(orientation) !== 'number') throw new TypeError();
