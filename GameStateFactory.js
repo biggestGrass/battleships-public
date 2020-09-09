@@ -1,51 +1,56 @@
-/*
-GameStateFactory produces GameStates
-playField field of GameState is a 2d matrix.
-playField field of GameState must consist of only positive integers (including 0)
-livesRemaining must be equal to the number of non-zero values in playField
-unless an element's value is either 1 or 0, the element must be adjacent to another element with the same value
-*/
-
-class GameState {
-    constructor(_playField,_lives) {
-        this.playField = _playField;
-        this.livesRemaining = _lives;
-        this.hitField = new Array(100).fill(false);
-        this.lastEvent = "Battleships";
-    }
-}
-
 function GameStateFactory(columns, rows){
     let clearanceMatrix = [new ClearanceMatrix(columns, rows, Direction.HORIZONTAL), new ClearanceMatrix(columns, rows, Direction.VERTICAL)];
     let shipPlacer = new ShipPlacer(columns, rows);
     let livesRemaining = 0;
-    this.tryPlaceShipRandomly = function(size) {
-        if(Math.floor(Math.random()*2)) {
-            if (tryPlaceShipRandomlyWithOrientation(size, Direction.HORIZONTAL)) return true;
-            else return tryPlaceShipRandomlyWithOrientation(size, Direction.VERTICAL);
-        } else {
-            if (tryPlaceShipRandomlyWithOrientation(size, Direction.VERTICAL)) return true;
-            else return tryPlaceShipRandomlyWithOrientation(size, Direction.HORIZONTAL);
+
+    function convertVectorCandidatesToCoordinates(vectorNo, vectorCandidates, orientation) {
+        let candidateCoordinates = [];
+        for(let vectorCandidate = 0; vectorCandidate < vectorCandidates.length; vectorCandidate++) {
+            if(orientation == Direction.HORIZONTAL) {
+                candidateCoordinates.push(new Coordinate(vectorCandidates[vectorCandidate], vectorNo));
+            }
+            else if(orientation == Direction.VERTICAL) {
+                candidateCoordinates.push(new Coordinate(vectorNo, vectorCandidates[vectorCandidate]));
+            }
+            else throw new TypeError("orientation " + orientation + " must be equivalent to 0 or 1");
         }
+        return candidateCoordinates;
     }
-    tryPlaceShipRandomlyWithOrientation = function(size, orientation) {
-        if(size == 0) return false;
-        if(orientation != Direction.VERTICAL && orientation != Direction.HORIZONTAL) return false;
+
+    function tryPlaceShipRandomlyWithOrientation(size, orientation) {
+        if(size < 1) throw new RangeError("size" + size + "must be an integer greater than 0");
+        if(orientation != Direction.VERTICAL && orientation != Direction.HORIZONTAL) throw new TypeError("orientation " + orientation + " must be equivalent to 0 or 1");
+
         let coordinates = [];
-        for(let vector = 0; vector < 10; vector++) {
-            coordinates = coordinates.concat(getCoordinatesFromVectorCandidates(vector,
-                ClearanceDetector.getCandidates(clearanceMatrix[orientation].getVector(vector), size),
-                orientation)
-            );
+        
+        for(let vectorNo = 0; vectorNo < 10; vectorNo++) {
+            let vectorCandidates = getIndicesGreaterThanValue(clearanceMatrix[orientation].getVector(vectorNo), size);
+            coordinates = coordinates.concat(convertVectorCandidatesToCoordinates(vectorNo, vectorCandidates, orientation));
         }
-        coordinates = shipPlacer.placeShipRandomly(size, orientation, coordinates);
         if(coordinates.length == 0) return false;
+
+        let randomCoordinate = coordinates[Math.floor(Math.random()*coordinates.length)];
+        coordinates = shipPlacer.tryPlaceShip(size, orientation, randomCoordinate);
+        if(coordinates.length == 0) return false;
+
         for(let shipPart = 0; shipPart<coordinates.length; shipPart++) {
             if(!clearanceMatrix[Direction.HORIZONTAL].addObstacle(coordinates[shipPart])) return false;
             if(!clearanceMatrix[Direction.VERTICAL].addObstacle(coordinates[shipPart])) return false;
         }
         livesRemaining += size;
         return true;
+    }
+    
+    this.tryPlaceShipRandomly = function(size) {
+        if(Math.floor(Math.random()*2)) {
+            if (tryPlaceShipRandomlyWithOrientation(size, Direction.HORIZONTAL)) return true;
+            else if (tryPlaceShipRandomlyWithOrientation(size, Direction.VERTICAL)) return true;
+        } else {
+            if (tryPlaceShipRandomlyWithOrientation(size, Direction.VERTICAL)) return true;
+            else if (tryPlaceShipRandomlyWithOrientation(size, Direction.HORIZONTAL)) return true;
+        }
+        console.log("Unable to place ship of size " + size);
+        return false;
     }
     
     this.getInitialGameState = function() {

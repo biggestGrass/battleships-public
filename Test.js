@@ -1,182 +1,72 @@
 function Test() {
-    function ClearanceDetector_getCandidates_vector_notArray_throwsException() {
+    function getIndicesGreaterThanValue_array_notArray_throwsException() {
         try {
-            ClearanceDetector.getCandidates("hello",0);
+            getIndicesGreaterThanValue("hello",0);
         } catch (error) {
             return true;
         }
         return false;
     }
-    function ClearanceDetector_getCandidates_vector_elementsNotNumber_throwsException() {
+    function getIndicesGreaterThanValue_array_elementsNotNumber_throwsException() {
         try {
-            ClearanceDetector.getCandidates(["hello"],0);
+            getIndicesGreaterThanValue(["hello"],0);
         } catch (error) {
             return true;
         }
         return false;
     }
-    function ClearanceDetector_getCandidates_vector_zeroLength_returnsEmptyArray() {
-        let valueToTest = ClearanceDetector.getCandidates([],1);
+    function getIndicesGreaterThanValue_array_zeroLength_returnsEmptyArray() {
+        let valueToTest = getIndicesGreaterThanValue([],1);
         if(Array.isArray(valueToTest)) {
             if(valueToTest.length==0) return true;
         }
         return false;
     }
 
-    function ClearanceDetector_getCandidates_size_notNumber_throwsException() {
+    function getIndicesGreaterThanValue_value_notNumber_throwsException() {
         try {
-            ClearanceDetector.getCandidates([],"hello");
+            getIndicesGreaterThanValue([],"hello");
         } catch (error) {
             return true;
         }
         return false;
     }
-    function ClearanceDetector_getCandidates_size_negative_returnsOutput() {
+    function getIndicesGreaterThanValue_value_negative_returnsOutput() {
         if([0,1].every((element, index) => {
-            return element==ClearanceDetector.getCandidates([1,1],-1)[index]
+            return element==getIndicesGreaterThanValue([1,1],-1)[index]
         })) return true;
         else return false;
     }
-    function ClearanceDetector_getCandidates_size_zero_returnsOutput() {
+    function getIndicesGreaterThanValue_value_zero_returnsOutput() {
         if([0,1].every((element, index) => {
-            return element==ClearanceDetector.getCandidates([1,1],0)[index]
+            return element==getIndicesGreaterThanValue([1,1],0)[index]
         })) return true;
         else return false;
     }
-    function ClearanceDetector_getCandidates_size_notInteger_returnsOutput() {
+    function getIndicesGreaterThanValue_value_notInteger_returnsOutput() {
         if([0,1].every((element, index) => {
-            return element==ClearanceDetector.getCandidates([1,1],0.5)[index]
+            return element==getIndicesGreaterThanValue([1,1],0.5)[index]
         })) return true;
         else return false;
-    }
-
-    function ClearanceDetector_isPositionClear_size_notNumber_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear([1,1],"hello",0);
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_size_negative_returnsOutput() {
-        return ClearanceDetector.isPositionClear([1,1],-1,0);
-    }
-    function ClearanceDetector_isPositionClear_size_zero_returnsOutput() {
-        return ClearanceDetector.isPositionClear([1,1],0,0);
-    }
-    function ClearanceDetector_isPositionClear_size_notInteger_returnsOutput() {
-        return ClearanceDetector.isPositionClear([1,1],0.5,0);
-    }
-
-    function ClearanceDetector_isPositionClear_vector_notArray_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear("hello",0,0);        
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_vector_elementNotNumber_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear(["hello","hello"],0,0);
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_vector_zeroLength_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear([],0,0);
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_pos_notInteger_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear([1,1],0,0.5);
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_pos_greaterThanOrEqualToVectorLength_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear([],0,0);
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_pos_notNumber_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear([1,1],0,"hello");
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_pos_negative_throwsException() {
-        try {
-            ClearanceDetector.isPositionClear([1,1],0,-1);
-        } catch (error) {
-            return true;
-        }
-        return false;
-    }
-    function ClearanceDetector_isPositionClear_pos_zero_returnsOutput() {
-        return ClearanceDetector.isPositionClear([1,1],0,0);
-    }
-    function ClearanceDetector_isPositionClear_pos_vectorLengthMinusOne_returnsOutput() {
-        return ClearanceDetector.isPositionClear([1,1],0,1);
     }
 
 
     this.testClearanceDetector = function() {
-        runTest(ClearanceDetector_getCandidates_vector_notArray_throwsException.name,
-            ()=>ClearanceDetector_getCandidates_vector_notArray_throwsException());
-        runTest(ClearanceDetector_getCandidates_vector_elementsNotNumber_throwsException.name,
-            ()=>ClearanceDetector_getCandidates_vector_elementsNotNumber_throwsException());
-        runTest(ClearanceDetector_getCandidates_vector_zeroLength_returnsEmptyArray.name,
-            ()=>ClearanceDetector_getCandidates_vector_zeroLength_returnsEmptyArray());
+        runTest(getIndicesGreaterThanValue_array_notArray_throwsException.name,
+            ()=>getIndicesGreaterThanValue_array_notArray_throwsException());
+        runTest(getIndicesGreaterThanValue_array_elementsNotNumber_throwsException.name,
+            ()=>getIndicesGreaterThanValue_array_elementsNotNumber_throwsException());
+        runTest(getIndicesGreaterThanValue_array_zeroLength_returnsEmptyArray.name,
+            ()=>getIndicesGreaterThanValue_array_zeroLength_returnsEmptyArray());
 
-        runTest(ClearanceDetector_getCandidates_size_notNumber_throwsException.name,
-            ()=>ClearanceDetector_getCandidates_size_notNumber_throwsException());
-        runTest(ClearanceDetector_getCandidates_size_negative_returnsOutput.name,
-            ()=>ClearanceDetector_getCandidates_size_negative_returnsOutput());
-        runTest(ClearanceDetector_getCandidates_size_zero_returnsOutput.name,
-            ()=>ClearanceDetector_getCandidates_size_zero_returnsOutput());
-        runTest(ClearanceDetector_getCandidates_size_notInteger_returnsOutput.name,
-            ()=>ClearanceDetector_getCandidates_size_notInteger_returnsOutput());
-
-        runTest(ClearanceDetector_isPositionClear_size_notNumber_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_size_notNumber_throwsException());
-        runTest(ClearanceDetector_isPositionClear_size_negative_returnsOutput.name,
-            ()=>ClearanceDetector_isPositionClear_size_negative_returnsOutput());
-        runTest(ClearanceDetector_isPositionClear_size_zero_returnsOutput.name,
-            ()=>ClearanceDetector_isPositionClear_size_zero_returnsOutput());
-        runTest(ClearanceDetector_isPositionClear_size_notInteger_returnsOutput.name,
-            ()=>ClearanceDetector_isPositionClear_size_notInteger_returnsOutput());
-
-        
-        runTest(ClearanceDetector_isPositionClear_vector_notArray_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_vector_notArray_throwsException());
-        runTest(ClearanceDetector_isPositionClear_vector_elementNotNumber_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_vector_elementNotNumber_throwsException());
-        runTest(ClearanceDetector_isPositionClear_vector_zeroLength_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_vector_zeroLength_throwsException());
-        runTest(ClearanceDetector_isPositionClear_pos_notInteger_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_pos_notInteger_throwsException());
-        runTest(ClearanceDetector_isPositionClear_pos_greaterThanOrEqualToVectorLength_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_pos_greaterThanOrEqualToVectorLength_throwsException());
-        runTest(ClearanceDetector_isPositionClear_pos_notNumber_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_pos_notNumber_throwsException());
-        runTest(ClearanceDetector_isPositionClear_pos_negative_throwsException.name,
-            ()=>ClearanceDetector_isPositionClear_pos_negative_throwsException());
-        runTest(ClearanceDetector_isPositionClear_pos_zero_returnsOutput.name,
-            ()=>ClearanceDetector_isPositionClear_pos_zero_returnsOutput());
-        runTest(ClearanceDetector_isPositionClear_pos_vectorLengthMinusOne_returnsOutput.name,
-            ()=>ClearanceDetector_isPositionClear_pos_vectorLengthMinusOne_returnsOutput());
+        runTest(getIndicesGreaterThanValue_value_notNumber_throwsException.name,
+            ()=>getIndicesGreaterThanValue_value_notNumber_throwsException());
+        runTest(getIndicesGreaterThanValue_value_negative_returnsOutput.name,
+            ()=>getIndicesGreaterThanValue_value_negative_returnsOutput());
+        runTest(getIndicesGreaterThanValue_value_zero_returnsOutput.name,
+            ()=>getIndicesGreaterThanValue_value_zero_returnsOutput());
+        runTest(getIndicesGreaterThanValue_value_notInteger_returnsOutput.name,
+            ()=>getIndicesGreaterThanValue_value_notInteger_returnsOutput());
     }
 
 
@@ -238,6 +128,7 @@ function Test() {
         }
         return false;
     }
+
     function ClearanceMatrix_constructor_orientation_NotZeroOrOne_throwsException() {
         try {
             new ClearanceMatrix(1,1,-1);
@@ -260,35 +151,11 @@ function Test() {
         else return false;
     }
     
-    function ClearanceMatrix_addObstacle_column_notNumber_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate("hello",1)) === undefined) return true;
-        else return false;
-    }
-    function ClearanceMatrix_addObstacle_column_notInteger_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(0.5,1)) === undefined) return true;
-        else return false;
-    }
-    function ClearanceMatrix_addObstacle_column_negative_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(-1,1)) === undefined) return true;
-        else return false;
-    }
     function ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined(testObject) {
         if(testObject.addObstacle(new Coordinate(2,1)) === undefined) return true;
         else return false;
     }
 
-    function ClearanceMatrix_addObstacle_row_notNumber_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(1,"hello")) === undefined) return true;
-        else return false;
-    }
-    function ClearanceMatrix_addObstacle_row_notInteger_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(1,0.5)) === undefined) return true;
-        else return false;
-    }
-    function ClearanceMatrix_addObstacle_row_negative_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(1,-1)) === undefined) return true;
-        else return false;
-    }
     function ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined(testObject) {
         if(testObject.addObstacle(new Coordinate(1,2)) === undefined) return true;
         else return false;
@@ -333,24 +200,114 @@ function Test() {
         runTest(ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_returnsUndefined.name,
             ()=>ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_returnsUndefined(testObject));
     
-        runTest(ClearanceMatrix_addObstacle_column_notNumber_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_column_notNumber_returnsUndefined(testObject))
-        runTest(ClearanceMatrix_addObstacle_column_notInteger_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_column_notInteger_returnsUndefined(testObject))
-        runTest(ClearanceMatrix_addObstacle_column_negative_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_column_negative_returnsUndefined(testObject))
         runTest(ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined.name,
             ()=>ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined(testObject))
         
-        runTest(ClearanceMatrix_addObstacle_row_notNumber_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_row_notNumber_returnsUndefined(testObject) )
-        runTest(ClearanceMatrix_addObstacle_row_notInteger_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_row_notInteger_returnsUndefined(testObject))
-        runTest(ClearanceMatrix_addObstacle_row_negative_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_row_negative_returnsUndefined(testObject))
         runTest(ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined.name,
             ()=>ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined(testObject))
     }
+/*
+    function ShipPlacer_constructor_column_negative() {
+        try {
+            new ShipPlacer(-1,10);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    };
+    function ShipPlacer_constructor_column_notNumber() {
+        try {
+            new ShipPlacer("hello",10);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    };
+    function ShipPlacer_constructor_column_notInteger() {
+        try {
+            new ShipPlacer(1.5,10)
+        } catch(error) {
+            return true;
+        }
+        return false;
+    };
+    function ShipPlacer_constructor_row_negative() {
+        try {
+            new ShipPlacer(10,-1);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    };
+    function ShipPlacer_constructor_row_notNumber() {
+        try {
+            new ShipPlacer(10,"test");
+        } catch(error) {
+            return true;
+        }
+        return false;
+    };
+    function ShipPlacer_constructor_row_notInteger() {
+        try {
+            new ShipPlacer(10,1.5);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    };
+
+    function ShipPlacer_placeShip_size_negative(testObject, validCoordinate) {
+        testObject.placeShip(-1, 0, validCoordinate);
+    }
+    function ShipPlacer_placeShip_size_notInteger(testObject, validCoordinate) {
+        testObject.placeShip(1.5, 0, validCoordinate);
+    }
+    function ShipPlacer_placeShip_size_notNumber(testObject, validCoordinate) {
+        testObject.placeShip("test", 0, validCoordinate);
+    }
+
+    function ShipPlacer_placeShip_orientation_notNumber(testObject, validCoordinate) {
+        testObject.placeShip(1, "test", validCoordinate);
+    }
+    function ShipPlacer_placeShip_orientation_outOfRange(testObject, validCoordinate) {
+        testObject.placeShip(1, 2, validCoordinate);
+    }
+
+    function ShipPlacer_placeShip_pos_notCoordinate(testObject) {
+        testObject.placeShip(1, 0, "test");
+    }
+    function ShipPlacer_placeShip_pos_column_outOfRange(testObject){
+        testObject.placeShip(1, 0, new Coordinate(10,1));
+    }
+    function ShipPlacer_placeShip_pos_row_outOfRange(){
+        testObject.placeShip(1, 0, new Coordinate(1,10));
+    }
+
+    function ShipPlacer_placeShipRandomly_size_negative(testObject, validCoordinateList){
+        testObject.placeShipRandomly(-1, 0, validCoordinateList);
+    }
+    function ShipPlacer_placeShipRandomly_size_notInteger(testObject, validCoordinateList){
+        testObject.placeShipRandomly(1.5, 0, validCoordinateList);
+    }
+    function ShipPlacer_placeShipRandomly_size_notNumber(testObject, validCoordinateList){
+        testObject.placeShipRandomly("test", 0, validCoordinateList);
+    }
+
+    function ShipPlacer_placeShipRandomly_orientation_notNumber(testObject, validCoordinateList){
+        testObject.placeShipRandomly(1, "test", validCoordinateList);
+    }
+    function ShipPlacer_placeShipRandomly_orientation_outOfRange(testObject, validCoordinateList){
+        testObject.placeShipRandomly(1, 2, validCoordinateList);
+    }
+
+    function ShipPlacer_placeShipRandomly_positions_notArray(testObject, validCoordinate){
+        testObject.placeShipRandomly(1, 0, validCoordinate);
+    }
+    function ShipPlacer_placeShipRandomly_positions_notArrayOfCoordinates(testObject, invalidCoordinateList){
+        testObject.placeShipRandomly(1, 0, invalidCoordinateList);
+    }
+    
+*/
 }
 
 let test = new Test();
