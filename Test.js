@@ -128,7 +128,6 @@ function Test() {
         }
         return false;
     }
-
     function ClearanceMatrix_constructor_orientation_NotZeroOrOne_throwsException() {
         try {
             new ClearanceMatrix(1,1,-1);
@@ -138,27 +137,46 @@ function Test() {
         return false;
     }
 
-    function ClearanceMatrix_getVector_vectorNo_notInteger_returnsUndefined(testObject) {
-        if(testObject.getVector("hello") === undefined) return true;
-        else return false;
+    function ClearanceMatrix_getVector_vectorNo_notInteger_throwsException(testObject) {
+        try {
+            testObject.getVector("hello");
+        }   catch(error) {
+            return true;
+        }
+        return false;
     }
-    function ClearanceMatrix_getVector_vectorNo_lessThanZero_returnsUndefined(testObject) {
-        if(testObject.getVector(-1) === undefined) return true;
-        else return false;
+    function ClearanceMatrix_getVector_vectorNo_lessThanZero_throwsException(testObject) {
+        try {
+            testObject.getVector(-1)
+        }   catch(error) {
+            return true;
+        }
+        return false;
     }
-    function ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_returnsUndefined(testObject) {
-        if(testObject.getVector(2) === undefined) return true;
-        else return false;
+    function ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_throwsException(testObject) {
+        try {
+            testObject.getVector(2)
+        }   catch(error) {
+            return true;
+        }
+        return false;
     }
     
-    function ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(2,1)) === undefined) return true;
-        else return false;
+    function ClearanceMatrix_addObstacle_column_greaterThanMax_throwsException(testObject) {
+        try {
+            testObject.addObstacle(new Coordinate(2,1))
+        }   catch(error) {
+            return true;
+        }
+        return false;
     }
-
-    function ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined(testObject) {
-        if(testObject.addObstacle(new Coordinate(1,2)) === undefined) return true;
-        else return false;
+    function ClearanceMatrix_addObstacle_row_greaterThanMax_throwsException(testObject) {
+        try {
+            testObject.addObstacle(new Coordinate(1,2))
+        }   catch(error) {
+            return true;
+        }
+        return false;
     }
 
     /*ClearanceMatrix_addObstacle_output
@@ -167,7 +185,7 @@ function Test() {
     ClearanceMatrix_getVector_output_allElementsGreaterByOneOverPreviousOrAreZero*/
     
     function runTest(testName, test) {
-        console.log(testName + " " + test());
+        console.log(test() + " " + testName);
     }
     
 
@@ -193,20 +211,20 @@ function Test() {
             ()=>ClearanceMatrix_constructor_orientation_NotZeroOrOne_throwsException());
 
         let testObject =new ClearanceMatrix(2,2,Direction.HORIZONTAL);
-        runTest(ClearanceMatrix_getVector_vectorNo_notInteger_returnsUndefined.name,
-            ()=>ClearanceMatrix_getVector_vectorNo_notInteger_returnsUndefined(testObject));
-        runTest(ClearanceMatrix_getVector_vectorNo_lessThanZero_returnsUndefined.name,
-            ()=>ClearanceMatrix_getVector_vectorNo_lessThanZero_returnsUndefined(testObject));
-        runTest(ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_returnsUndefined.name,
-            ()=>ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_returnsUndefined(testObject));
+        runTest(ClearanceMatrix_getVector_vectorNo_notInteger_throwsException.name,
+            ()=>ClearanceMatrix_getVector_vectorNo_notInteger_throwsException(testObject));
+        runTest(ClearanceMatrix_getVector_vectorNo_lessThanZero_throwsException.name,
+            ()=>ClearanceMatrix_getVector_vectorNo_lessThanZero_throwsException(testObject));
+        runTest(ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_throwsException.name,
+            ()=>ClearanceMatrix_getVector_vectorNo_greaterThanOrEqualToClearanceVectorsLength_throwsException(testObject));
     
-        runTest(ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_column_greaterThanMax_returnsUndefined(testObject))
+        runTest(ClearanceMatrix_addObstacle_column_greaterThanMax_throwsException.name,
+            ()=>ClearanceMatrix_addObstacle_column_greaterThanMax_throwsException(testObject))
         
-        runTest(ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined.name,
-            ()=>ClearanceMatrix_addObstacle_row_greaterThanMax_returnsUndefined(testObject))
+        runTest(ClearanceMatrix_addObstacle_row_greaterThanMax_throwsException.name,
+            ()=>ClearanceMatrix_addObstacle_row_greaterThanMax_throwsException(testObject))
     }
-/*
+
     function ShipPlacer_constructor_column_negative() {
         try {
             new ShipPlacer(-1,10);
@@ -256,60 +274,175 @@ function Test() {
         return false;
     };
 
-    function ShipPlacer_placeShip_size_negative(testObject, validCoordinate) {
-        testObject.placeShip(-1, 0, validCoordinate);
+    function ShipPlacer_tryPlaceShip_size_negative(testObject, validCoordinate) {
+        try{
+            testObject.tryPlaceShip(-1, 0, validCoordinate);
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
-    function ShipPlacer_placeShip_size_notInteger(testObject, validCoordinate) {
-        testObject.placeShip(1.5, 0, validCoordinate);
+    function ShipPlacer_tryPlaceShip_size_notInteger(testObject, validCoordinate) {
+        try{
+            testObject.tryPlaceShip(1.5, 0, validCoordinate);
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
-    function ShipPlacer_placeShip_size_notNumber(testObject, validCoordinate) {
-        testObject.placeShip("test", 0, validCoordinate);
-    }
-
-    function ShipPlacer_placeShip_orientation_notNumber(testObject, validCoordinate) {
-        testObject.placeShip(1, "test", validCoordinate);
-    }
-    function ShipPlacer_placeShip_orientation_outOfRange(testObject, validCoordinate) {
-        testObject.placeShip(1, 2, validCoordinate);
-    }
-
-    function ShipPlacer_placeShip_pos_notCoordinate(testObject) {
-        testObject.placeShip(1, 0, "test");
-    }
-    function ShipPlacer_placeShip_pos_column_outOfRange(testObject){
-        testObject.placeShip(1, 0, new Coordinate(10,1));
-    }
-    function ShipPlacer_placeShip_pos_row_outOfRange(){
-        testObject.placeShip(1, 0, new Coordinate(1,10));
+    function ShipPlacer_tryPlaceShip_size_notNumber(testObject, validCoordinate) {
+        try{
+            testObject.tryPlaceShip("test", 0, validCoordinate);
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
 
-    function ShipPlacer_placeShipRandomly_size_negative(testObject, validCoordinateList){
-        testObject.placeShipRandomly(-1, 0, validCoordinateList);
+    function ShipPlacer_tryPlaceShip_orientation_notNumber(testObject, validCoordinate) {
+        try{
+            testObject.tryPlaceShip(1, "test", validCoordinate);
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
-    function ShipPlacer_placeShipRandomly_size_notInteger(testObject, validCoordinateList){
-        testObject.placeShipRandomly(1.5, 0, validCoordinateList);
-    }
-    function ShipPlacer_placeShipRandomly_size_notNumber(testObject, validCoordinateList){
-        testObject.placeShipRandomly("test", 0, validCoordinateList);
+    function ShipPlacer_tryPlaceShip_orientation_outOfRange(testObject, validCoordinate) {
+        try{
+            testObject.tryPlaceShip(1, 2, validCoordinate);
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
 
-    function ShipPlacer_placeShipRandomly_orientation_notNumber(testObject, validCoordinateList){
-        testObject.placeShipRandomly(1, "test", validCoordinateList);
+    function ShipPlacer_tryPlaceShip_pos_notCoordinate(testObject) {
+        try{
+            testObject.tryPlaceShip(1, 0, "test");
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
-    function ShipPlacer_placeShipRandomly_orientation_outOfRange(testObject, validCoordinateList){
-        testObject.placeShipRandomly(1, 2, validCoordinateList);
+    function ShipPlacer_tryPlaceShip_pos_column_outOfRange(testObject){
+        try{
+            testObject.tryPlaceShip(1, Direction.HORIZONTAL, new Coordinate(10,1));
+        } catch(error) {
+            return true;
+        }
+        return false;
+    }
+    function ShipPlacer_tryPlaceShip_pos_row_outOfRange(testObject){
+        try{
+            testObject.tryPlaceShip(1, Direction.VERTICAL, new Coordinate(1,10));
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
 
-    function ShipPlacer_placeShipRandomly_positions_notArray(testObject, validCoordinate){
-        testObject.placeShipRandomly(1, 0, validCoordinate);
+    this.testShipPlacer = function() {
+        runTest(ShipPlacer_constructor_column_negative.name,
+        ()=>ShipPlacer_constructor_column_negative());
+        runTest(ShipPlacer_constructor_column_notNumber.name,
+        ()=>ShipPlacer_constructor_column_notNumber());
+        runTest(ShipPlacer_constructor_column_notInteger.name,
+        ()=>ShipPlacer_constructor_column_notInteger());
+        runTest(ShipPlacer_constructor_row_negative.name,
+        ()=>ShipPlacer_constructor_row_negative());
+        runTest(ShipPlacer_constructor_row_notNumber.name,
+        ()=>ShipPlacer_constructor_row_notNumber());
+        runTest(ShipPlacer_constructor_row_notInteger.name,
+        ()=>ShipPlacer_constructor_row_notInteger());
+
+        let testObject = new ShipPlacer(10,10);
+        let validCoordinate = new Coordinate(1,1);
+        
+        runTest(ShipPlacer_tryPlaceShip_size_negative.name,
+            ()=>ShipPlacer_tryPlaceShip_size_negative(testObject, validCoordinate));
+        runTest(ShipPlacer_tryPlaceShip_size_notInteger.name,
+            ()=>ShipPlacer_tryPlaceShip_size_notInteger(testObject, validCoordinate));
+        runTest(ShipPlacer_tryPlaceShip_size_notNumber.name,
+            ()=>ShipPlacer_tryPlaceShip_size_notNumber(testObject, validCoordinate));
+        runTest(ShipPlacer_tryPlaceShip_orientation_notNumber.name,
+            ()=>ShipPlacer_tryPlaceShip_orientation_notNumber(testObject, validCoordinate));
+        runTest(ShipPlacer_tryPlaceShip_orientation_outOfRange.name,
+            ()=>ShipPlacer_tryPlaceShip_orientation_outOfRange(testObject, validCoordinate));
+
+        runTest(ShipPlacer_tryPlaceShip_pos_notCoordinate.name,
+            ()=>ShipPlacer_tryPlaceShip_pos_notCoordinate(testObject));
+        runTest(ShipPlacer_tryPlaceShip_pos_column_outOfRange.name,
+            ()=>ShipPlacer_tryPlaceShip_pos_column_outOfRange(testObject));
+        runTest(ShipPlacer_tryPlaceShip_pos_row_outOfRange.name,
+            ()=>ShipPlacer_tryPlaceShip_pos_row_outOfRange(testObject));
     }
-    function ShipPlacer_placeShipRandomly_positions_notArrayOfCoordinates(testObject, invalidCoordinateList){
-        testObject.placeShipRandomly(1, 0, invalidCoordinateList);
+
+    function Coordinate_constructor_column_notNumber(){
+        try{
+            new Coordinate("test", 0);
+        } catch(error) {
+            return true;
+        }
+        return false;
     }
-    
-*/
+    function Coordinate_constructor_column_notInteger(){
+        try{
+            new Coordinate(0.5, 0);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    }
+    function Coordinate_constructor_column_negative(){
+        try{
+            new Coordinate(-1, 0);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    }
+    function Coordinate_constructor_row_notNumber(){
+        try{
+            new Coordinate(0,"test");
+        } catch(error) {
+            return true;
+        }
+        return false;
+    }
+    function Coordinate_constructor_row_notInteger(){
+        try{
+            new Coordinate(0,0.5);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    }
+    function Coordinate_constructor_row_negative(){
+        try{
+            new Coordinate(0,-1);
+        } catch(error) {
+            return true;
+        }
+        return false;
+    }
+    this.testCoordinate = function() {
+        runTest(Coordinate_constructor_column_notNumber.name,
+        ()=>Coordinate_constructor_column_notNumber());
+        runTest(Coordinate_constructor_column_notInteger.name,
+        ()=>Coordinate_constructor_column_notInteger());
+        runTest(Coordinate_constructor_column_negative.name,
+        ()=>Coordinate_constructor_column_negative());
+        runTest(Coordinate_constructor_row_notNumber.name,
+        ()=>Coordinate_constructor_row_notNumber());
+        runTest(Coordinate_constructor_row_notInteger.name,
+        ()=>Coordinate_constructor_row_notInteger());
+        runTest(Coordinate_constructor_row_negative.name,
+        ()=>Coordinate_constructor_row_negative());
+    }
 }
 
 let test = new Test();
 test.testClearanceMatrix();
 test.testClearanceDetector();
+test.testCoordinate();
+test.testShipPlacer();

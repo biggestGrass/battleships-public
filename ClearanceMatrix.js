@@ -9,36 +9,43 @@ function ClearanceMatrix(columns, rows, orientation){
         for(let i = 0; i < rows; i++) {
             clearanceVectors[i] = new Array(columns);
         }
-        this.addObstacle = function(coordinate) {
-            return addObstacle(coordinate.row, coordinate.column);
-        }
     } else if(orientation == Direction.VERTICAL) {
         clearanceVectors = new Array(columns);
         for(let i = 0; i < columns; i++) {
             clearanceVectors[i] = new Array(rows);
         }
-        this.addObstacle = function(coordinate) {
-            return addObstacle(coordinate.column, coordinate.row);
-        }
     } else {
-        if(typeof(orientation) !== 'number') throw new TypeError();
-        else throw new RangeError();
+        throw new Error("orientation " + orientation + " is not a valid orientation");
+    }
+    let matrixOrientation = orientation;
+
+    this.addObstacle = function(coordinate) {
+        if(typeof(coordinate) != 'object') throw new TypeError("coordinate " + coordinate + "is not an object");
+        if(coordinate.constructor.name != Coordinate.name) throw new TypeError("coordinate " + coordinatse.toString() + " is not a Coordinate");
+        if(matrixOrientation == Direction.HORIZONTAL) {
+            return addObstacle(coordinate.row, coordinate.column);
+        } else if(matrixOrientation == Direction.VERTICAL) {
+            return addObstacle(coordinate.column, coordinate.row);
+        } else {
+            throw new Error("matrixOrientation " + matrixOrientation + " is not a valid orientation");
+        }
     }
 
     let addObstacle = function(vectorNo, vectorPos) {
-        if(Number.isSafeInteger(vectorNo) && Number.isSafeInteger(vectorPos)) {
-            if(vectorNo >= 0 && vectorNo < clearanceVectors.length) {
-                if(vectorPos >= 0 && vectorPos < clearanceVectors[vectorNo].length) {
-                    if(clearanceVectors[vectorNo][vectorPos]!=0) {
-                        clearanceVectors[vectorNo][vectorPos] = 0;
-                        return true;
-                    } else {
-                        return false;
-                    }
+        if(isValidArrayIndex(vectorNo,clearanceVectors.length)) {
+            if(isValidArrayIndex(vectorPos, clearanceVectors[vectorNo].length)) {
+                if(clearanceVectors[vectorNo][vectorPos] != 0) {
+                    clearanceVectors[vectorNo][vectorPos] = 0;
+                    return true;
+                } else {
+                    return false;
                 }
+            } else {
+                throw new Error("vectorPos " + vectorPos + " is not a valid array index for clearanceVectors[" + vectorNo + "] " + clearanceVectors[vectorNo]);
             }
+        } else {
+            throw new Error("vectorNo " + vectorNo + " is not a valid array index for clearanceVectors " + clearanceVectors);
         }
-        return undefined;
     }
 
     let updateVector = function (vectorNo) {
@@ -52,9 +59,8 @@ function ClearanceMatrix(columns, rows, orientation){
                     clearance++;
                 }
             }
-            return true;
         } else {
-            return false;
+            throw new Error("vectorNo " + vectorNo + " is not a valid array index for clearanceVectors " + clearanceVectors);
         }
     }
 
@@ -63,15 +69,7 @@ function ClearanceMatrix(columns, rows, orientation){
             updateVector(vectorNo);
             return clearanceVectors[vectorNo].slice();
         } else {
-            return undefined;
+            throw new Error("vectorNo " + vectorNo + " is not a valid array index for clearanceVectors " + clearanceVectors);
         }
     }
-}
-
-
-function isValidArrayIndex(index,arrayLength) {
-    if(Number.isSafeInteger(index)) {
-        if(index >= 0 && index < arrayLength) return true;
-    }
-    return false;
 }
