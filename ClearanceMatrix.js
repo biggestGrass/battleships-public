@@ -20,14 +20,14 @@ function ClearanceMatrix(columns, rows, orientation){
     let matrixOrientation = orientation;
 
     this.addObstacle = function(coordinate) {
-        if(typeof(coordinate) != 'object') throw new TypeError("coordinate " + coordinate + "is not an object");
-        if(coordinate.constructor.name != Coordinate.name) throw new TypeError("coordinate " + coordinatse.toString() + " is not a Coordinate");
+        if(typeof(coordinate) != 'object') throw new TypeError("coordinate type" + typeof(coordinate) + "must be object");
+        if(coordinate.constructor.name != Coordinate.name) throw new TypeError("coordinate class" + coordinatse.constructor.name + " must be " + Coordinate.name);
         if(matrixOrientation == Direction.HORIZONTAL) {
             return addObstacle(coordinate.row, coordinate.column);
         } else if(matrixOrientation == Direction.VERTICAL) {
             return addObstacle(coordinate.column, coordinate.row);
         } else {
-            throw new Error("matrixOrientation " + matrixOrientation + " is not a valid orientation");
+            throw new Error("matrixOrientation " + matrixOrientation + " must be Direction.HORIZONTAL (0) or Direction.VERTICAL (1)");
         }
     }
 

@@ -13,9 +13,17 @@ class Coordinate{
 }
 
 class GameState {
-    constructor(_playField,_lives) {
-        this.playField = _playField;
-        this.livesRemaining = _lives;
+    constructor(playField) {
+        if(typeof(playField) != 'object') throw new TypeError("playField type"+ typeof(playField) +" must be object");
+        if(playField.constructor.name != Array.name) throw new TypeError("playField class"+ playField.constructor.name +" must be class " + Array.name);
+        
+        this.playField = playField;
+        this.livesRemaining = 0;
+        for(let i = 0; i < this.playField.length; i++) {
+            if(typeof(this.playField[i]) != 'number') throw new TypeError("playField[" + i + "] "+ this.playField[i] + " must be a number");
+            if(this.playField[i]) this.livesRemaining++;
+        }
+        
         this.hitField = new Array(100).fill(false);
         this.lastEvent = "Battleships";
     }

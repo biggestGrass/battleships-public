@@ -12,14 +12,14 @@ function GameStateFactory(columns, rows){
             else if(orientation == Direction.VERTICAL) {
                 candidateCoordinates.push(new Coordinate(vectorNo, vectorCandidates[vectorCandidate]));
             }
-            else throw new TypeError("orientation " + orientation + " must be equivalent to 0 or 1");
+            else throw new TypeError("orientation " + orientation + " must be Direction.HORIZONTAL (0) or Direction.VERTICAL (1)");
         }
         return candidateCoordinates;
     }
 
     function tryPlaceShipRandomlyWithOrientation(size, orientation) {
         if(size < 1) throw new RangeError("size" + size + "must be an integer greater than 0");
-        if(orientation != Direction.VERTICAL && orientation != Direction.HORIZONTAL) throw new TypeError("orientation " + orientation + " must be equivalent to 0 or 1");
+        if(orientation != Direction.VERTICAL && orientation != Direction.HORIZONTAL) throw new TypeError("orientation " + orientation + " must be Direction.HORIZONTAL (0) or Direction.VERTICAL (1)");
 
         let coordinates = [];
         
@@ -37,7 +37,6 @@ function GameStateFactory(columns, rows){
             if(!clearanceMatrix[Direction.HORIZONTAL].addObstacle(coordinates[shipPart])) return false;
             if(!clearanceMatrix[Direction.VERTICAL].addObstacle(coordinates[shipPart])) return false;
         }
-        livesRemaining += size;
         return true;
     }
     
@@ -59,6 +58,6 @@ function GameStateFactory(columns, rows){
         for(let i = 0; i < playField.length; i++) {
             finalPlayField = finalPlayField.concat(playField[i])
         }
-        return new GameState(finalPlayField,livesRemaining);
+        return new GameState(finalPlayField);
     }
 }
