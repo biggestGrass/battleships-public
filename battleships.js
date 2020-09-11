@@ -27,7 +27,7 @@ class Game extends React.Component {
                         lastEvent += "Destroyer"
                         break;
                     default:
-                        lastEvent += "Ship"
+                        lastEvent += "Placeholder"
                         break;
                     }
                 } else lastEvent = "Miss"

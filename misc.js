@@ -47,7 +47,7 @@ function getIndicesGreaterThanValue(array, value) {
     if(!Array.isArray(array)) throw new TypeError("array " + array + " is not an array");
     if(typeof(value) != 'number') throw new TypeError("value " + value + " is not a number");
     for(let i = 0; i < array.length; i++) {
-        if(typeof(array[i])!='number') throw new TypeError("element " + i + " of array " + array + " is not a number");
+        if(typeof(array[i])!='number') throw new TypeError("array[" + i + "] " + array[i] + " is not a number");
     }
     let indices = [];
     for(let index = 0; index < array.length; index++) {
