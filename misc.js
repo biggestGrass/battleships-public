@@ -20,7 +20,7 @@ class GameState {
         this.playField = playField;
         this.livesRemaining = 0;
         for(let i = 0; i < this.playField.length; i++) {
-            if(typeof(this.playField[i]) != 'number') throw new TypeError("playField[" + i + "] "+ this.playField[i] + " must be a number");
+            if(typeof(this.playField[i]) != 'number') throw new TypeError("playField[" + i + "] "+ typeof(this.playField[i]) + " must be type number");
             if(this.playField[i]) this.livesRemaining++;
         }
         
