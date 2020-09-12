@@ -10,16 +10,16 @@ class Game extends React.Component {
         console.log(gameStateFactory.tryPlaceShipRandomly(4));
         this.state = gameStateFactory.getInitialGameState();
     }
-    hitTile(i) {
+    hitTile(pos) {
         if(this.state.livesRemaining) {
-            if(!this.state.hitField[i]) {
+            if(!this.state.hitField[pos.column][pos.row]) {
                 const hitField = this.state.hitField.slice();
-                hitField[i] = true;
+                hitField[pos.column][pos.row] = true;
                 let lastEvent;
-                if(this.state.playField[i]) {
+                if(this.state.playField[pos.column][pos.row]) {
                     this.state.livesRemaining--;
                     lastEvent = "Hit: "
-                    switch(this.state.playField[i]) {
+                    switch(this.state.playField[pos.column][pos.row]) {
                     case 5:
                         lastEvent += "Battleship"
                         break;
@@ -39,10 +39,10 @@ class Game extends React.Component {
             }
         }
     }
-    tileContents(i) {
+    tileContents(pos) {
         let contents = "";
-        if(this.state.hitField[i]) {
-            switch(this.state.playField[i]) {
+        if(this.state.hitField[pos.column][pos.row]) {
+            switch(this.state.playField[pos.column][pos.row]) {
                 case 5:
                     contents += "BS"
                     break;
@@ -53,14 +53,14 @@ class Game extends React.Component {
                     break;
             }
         } else {
-            contents += String.fromCharCode('A'.charCodeAt(0)+(i%10));
-            contents += Math.floor(i/10)+1;
+            contents += String.fromCharCode('A'.charCodeAt(0)+(pos.column));
+            contents += pos.row+1;
         }
         return contents;
     }
-    tileState(i) {
-        if(this.state.hitField[i]) {
-            if(this.state.playField[i]) return " hit";
+    tileState(pos) {
+        if(this.state.hitField[pos.column][pos.row]) {
+            if(this.state.playField[pos.column][pos.row]) return " hit";
             else return " miss";
         }
         return " unknown";
@@ -77,16 +77,17 @@ class Game extends React.Component {
         for (let i = 0; i < 10; i++) {
             let row = [];
             for(let j = 0; j < 10; j++) {
+                let coordinate = new Coordinate(j,i);
                 row.push(e(Tile, {
-                    tileState: "tile" + this.tileState(i*10+j),
-                    clickHandler: () => this.hitTile(i*10+j),
-                    tileContents: this.tileContents(i*10+j),
+                    tileState: "tile" + this.tileState(coordinate),
+                    clickHandler: () => this.hitTile(coordinate),
+                    tileContents: this.tileContents(coordinate),
                     key: i*10+j
                 }))
             }
             rows.push(e("div",{key: "row"+i},row));
         }
-        return e("div",null,rows,e("div",null,this.eventMessage()), e(TextInput,{hitTile: (i) => this.hitTile(i)}));
+        return e("div",null,rows,e("div",null,this.eventMessage()), e(TextInput,{hitTile: (pos) => this.hitTile(pos)}));
     }
 }
 
@@ -112,7 +113,7 @@ class TextInput extends React.Component {
         column = column.toUpperCase();
         if(!column.match(/[A-J]/)) return;
         column = column.charCodeAt(0) - 'A'.charCodeAt(0);
-        this.props.hitTile(column+row*10);
+        this.props.hitTile(new Coordinate(column,row));
     }
     render() {
         return e("form", {

@@ -19,12 +19,16 @@ class GameState {
         
         this.playField = playField;
         this.livesRemaining = 0;
-        for(let i = 0; i < this.playField.length; i++) {
-            if(typeof(this.playField[i]) != 'number') throw new TypeError("playField[" + i + "] "+ typeof(this.playField[i]) + " must be type number");
-            if(this.playField[i]) this.livesRemaining++;
+        this.hitField = new Array(playField.length);
+        for(let column = 0; column < playField.length; column++) {
+            if(typeof(playField[column]) != 'object') throw new TypeError("playField["+column+"] type"+ typeof(playField[column]) +" must be object");
+            if(playField[column].constructor.name != Array.name) throw new TypeError("playField["+column+"] class"+ playField[column].constructor.name +" must be class " + Array.name);
+            this.hitField[column] = new Array(playField[column].length).fill(false);
+            for(let row = 0; row < playField[column].length; row++) {
+                if(typeof(playField[column][row]) != 'number') throw new TypeError("playField[" + column+ "]["+row+"] "+ typeof(playField[column][row]) + " must be type number");
+                if(playField[column][row]) this.livesRemaining++;
+            }
         }
-        
-        this.hitField = new Array(100).fill(false);
         this.lastEvent = "Battleships";
     }
 }

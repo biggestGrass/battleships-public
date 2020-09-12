@@ -53,11 +53,6 @@ function GameStateFactory(columns, rows){
     }
     
     this.getInitialGameState = function() {
-        let playField = shipPlacer.getPlayField();
-        let finalPlayField = [];
-        for(let i = 0; i < playField.length; i++) {
-            finalPlayField = finalPlayField.concat(playField[i])
-        }
-        return new GameState(finalPlayField);
+        return new GameState(shipPlacer.getPlayField());
     }
 }
