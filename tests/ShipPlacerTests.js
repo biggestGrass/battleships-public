@@ -153,6 +153,25 @@
         }
         return true;
     }
+    let ShipPlacer_tryPlaceShip_vertical_collision_returnsEmptyArray = function() {
+        let testPlacer = new ShipPlacer(10,10)
+        testPlacer.tryPlaceShip(5,Direction.VERTICAL,new Coordinate(5,5));
+        if(testPlacer.tryPlaceShip(5,Direction.VERTICAL,new Coordinate(5,6)).length != 0) return false;
+        return true;
+    }
+    let ShipPlacer_tryPlaceShip_horizontal_collision_returnsEmptyArray = function() {
+        let testPlacer = new ShipPlacer(10,10)
+        testPlacer.tryPlaceShip(5,Direction.HORIZONTAL,new Coordinate(5,5));
+        if(testPlacer.tryPlaceShip(5,Direction.HORIZONTAL,new Coordinate(6,5)).length != 0) return false;
+        return true;
+    }
+    let ShipPlacer_tryPlaceShip_mixed_collision_returnsEmptyArray = function() {
+        let testPlacer = new ShipPlacer(10,10)
+        testPlacer.tryPlaceShip(5,Direction.HORIZONTAL,new Coordinate(6,4));
+        if(testPlacer.tryPlaceShip(5,Direction.VERTICAL,new Coordinate(4,6)).length != 0) return false;
+        return true;
+    }
+
 
     let ShipPlacer_getPlayField_after_tryPlaceShip_returnMatchesCoordinates = function() {
         let testPlacer = new ShipPlacer(10,10);
@@ -209,6 +228,15 @@
         ()=>ShipPlacer_tryPlaceShip_pos_column_outOfRange_throwsException(testObject));
     ShipPlacerTester.addTest(ShipPlacer_tryPlaceShip_pos_row_outOfRange_throwsException.name,
         ()=>ShipPlacer_tryPlaceShip_pos_row_outOfRange_throwsException(testObject));
+
+
+    ShipPlacerTester.addTest(ShipPlacer_tryPlaceShip_vertical_collision_returnsEmptyArray.name,
+        ()=>ShipPlacer_tryPlaceShip_vertical_collision_returnsEmptyArray());
+    ShipPlacerTester.addTest(ShipPlacer_tryPlaceShip_horizontal_collision_returnsEmptyArray.name,
+        ()=>ShipPlacer_tryPlaceShip_horizontal_collision_returnsEmptyArray());
+    ShipPlacerTester.addTest(ShipPlacer_tryPlaceShip_mixed_collision_returnsEmptyArray.name,
+        ()=>ShipPlacer_tryPlaceShip_mixed_collision_returnsEmptyArray());
+    
 
     ShipPlacerTester.addTest(ShipPlacer_getPlayField_length_matches_constructor_inputs.name,
         ()=>ShipPlacer_getPlayField_length_matches_constructor_inputs());

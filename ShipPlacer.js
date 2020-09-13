@@ -13,7 +13,7 @@ function ShipPlacer(columns, rows) {
         let shipCoordinates = [];
         if(!Number.isInteger(size)) throw new TypeError("size " + size + "is not an integer");
         if(size < 1) throw new TypeError("size " + size + "must be greater than 0");
-        if(typeof(pos) != 'object') throw new TypeError("pos type" + typeof(pos) + "must be object");
+        if(typeof(pos) != 'object') throw new TypeError("pos type " + typeof(pos) + " must be object");
         if(pos.constructor.name != Coordinate.name) throw new TypeError("pos class" + pos.constructor.name + "must be " + Coordinate.name);
         if(orientation== Direction.HORIZONTAL) {
             if(size > pos.column + 1) return [];
