@@ -23,3 +23,4 @@ GameStateTester = new Tester();
 getIndicesGreaterThanValueTester = new Tester();
 isValidArrayIndexTester = new Tester();
 ShipPlacerTester = new Tester(); 
+GameStateFactoryTester = new Tester();

@@ -138,5 +138,14 @@ function Tile(props) {
 }   
 
 
+GameStateFactoryTester.runTests();
+ClearanceMatrixTester.runTests();
+CoordinateTester.runTests();
+GameStateTester.runTests();
+getIndicesGreaterThanValueTester.runTests();
+isValidArrayIndexTester.runTests();
+ShipPlacerTester.runTests(); 
+
+
 const domContainer = document.querySelector('#game');
 ReactDOM.render(React.createElement(Game), domContainer);
